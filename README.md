@@ -9,9 +9,9 @@ Movy Browser is my personal React app for browsing movies. It’s a simple, inte
 - Component-based React structure
 
 ## Tech Stack
-- React.js
 - JavaScript
 - HTML & CSS
+- React.js + Tailwind CSS
 - The Movie Database API (TMDB API)
 
 
