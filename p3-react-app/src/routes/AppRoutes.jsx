@@ -4,8 +4,10 @@ import TopRated from '../pages/TopRated';
 import Upcoming from '../pages/Upcoming';
 import MovieDetails from '../pages/MovieDetails';
 import Trending from '../pages/Trending';
+import Search from '../components/Search';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+
 
 
 const AppRoutes = ({setToken}) => {
@@ -16,6 +18,7 @@ const AppRoutes = ({setToken}) => {
       <Route path='/upcoming' element={<Upcoming />} />
       <Route path='/movie/:id' element={<MovieDetails />} />
       <Route path='/trending' element={<Trending />} />
+      <Route path="/search" element={<Search />} />
       <Route path='/login' element={<Login setToken={setToken}/>} />
       <Route path='/register' element={<Register setToken={setToken}/>} />
     </Routes>
