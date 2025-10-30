@@ -1,0 +1,26 @@
+import MOVY_API_BASE_URL from './apiConfig';
+
+const getAuthenticationHeader = () => {
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    return {'Authorization': `Bearer ${token}`};
+  }
+
+  return {};
+}
+
+export async function createWatchlist(name) {
+  const res = await fetch(`${MOVY_API_BASE_URL}/watchlists`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthenticationHeader()
+    },
+    body: JSON.stringify({ name })
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to create watchlist');
+  }
+}
