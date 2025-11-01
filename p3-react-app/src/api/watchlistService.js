@@ -37,3 +37,15 @@ export async function getUserWatchlist() {
   return res.json();
 }
 
+export async function getWatchlistById(id) {
+  const res = await fetch(`${MOVY_API_BASE_URL}/watchlists/${id}`, {
+    headers: getAuthenticationHeader()
+    }
+  )
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch watchlist');
+  }
+
+  return res.json();
+}
