@@ -49,3 +49,20 @@ export async function getWatchlistById(id) {
 
   return res.json();
 }
+
+export async function renameWatchlist(id, newName) {
+  const res = await fetch(`${MOVY_API_BASE_URL}/watchlists/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthenticationHeader()
+    },
+    body: JSON.stringify({ name: newName })
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to rename wathclist');
+  }
+
+  return res.json();
+}
