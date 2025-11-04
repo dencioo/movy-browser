@@ -107,3 +107,18 @@ export async function addMovieToWatchlist(watchlistId, movieId) {
 
   return data;
 }
+
+export async function removeMovieFromWatchlist(watchlistId, movieId) {
+  const res = await fetch(`${MOVY_API_BASE_URL}/watchlists/${watchlistId}/movies/${movieId}`, {
+    method: 'DELETE',
+    headers: getAuthenticationHeader()
+  })
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error('Failed to remove movie from watchlist');
+  }
+
+  return data;
+}
