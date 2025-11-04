@@ -20,8 +20,10 @@ export async function createWatchlist(name) {
     body: JSON.stringify({ name })
   })
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error('Failed to create watchlist');
+    throw new Error(data.error || 'Failed to create watchlist');
   }
 }
 
@@ -30,11 +32,13 @@ export async function getUserWatchlist() {
     headers: getAuthenticationHeader()
   })
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error('Failed to create watchlist');
+    throw new Error(data.error || 'Failed to create watchlist');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function getWatchlistById(id) {
@@ -43,11 +47,13 @@ export async function getWatchlistById(id) {
     }
   )
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error('Failed to fetch watchlist');
+    throw new Error(data.error || 'Failed to fetch watchlist');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function renameWatchlist(id, newName) {
@@ -60,11 +66,13 @@ export async function renameWatchlist(id, newName) {
     body: JSON.stringify({ name: newName })
   })
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error('Failed to rename wathclist');
+    throw new Error(data.error || 'Failed to rename wathclist');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function deleteWatchlist(id) {
@@ -72,12 +80,13 @@ export async function deleteWatchlist(id) {
     method: 'DELETE',
     headers: getAuthenticationHeader()
   })
+  const data = await res.json();
 
   if (!res.ok) {
     throw new Error('Failed to delete watchlist');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function addMovieToWatchlist(watchlistId, movieId) {
@@ -90,9 +99,11 @@ export async function addMovieToWatchlist(watchlistId, movieId) {
     body: JSON.stringify({ movieId })
   })
 
+  const data = await res.json()
+
   if (!res.ok) {
-    throw new Error('Failed to add movie to watchlist');
+    throw new Error(data.error || 'Failed to add movie to watchlist');
   }
 
-  return res.json();
+  return data;
 }
