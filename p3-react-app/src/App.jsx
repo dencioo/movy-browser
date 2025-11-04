@@ -2,6 +2,10 @@ import { useState } from 'react';
 import './App.css'
 import Header from './components/Header';
 import AppRoutes from './routes/AppRoutes';
+import { addMovieToWatchlist, getUserWatchlist } from './api/watchlistService.js';
+
+window.getUserWatchlist = getUserWatchlist;
+window.addMovieToWatchlist = addMovieToWatchlist;
 
 function App() {
 
