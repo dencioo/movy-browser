@@ -122,3 +122,23 @@ export async function removeMovieFromWatchlist(watchlistId, movieId) {
 
   return data;
 }
+
+// Sync single movie to backend database
+export async function syncMovieToBackend(movieData) {
+  const res = await fetch(`${MOVY_API_BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthenticationHeader()
+    },
+    body: JSON.stringify(movieData)
+  })
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error || 'Failed to sync movies');
+  }
+
+  return data;
+}
