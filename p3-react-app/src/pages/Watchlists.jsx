@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserWatchlist } from '../api/watchlistService';
+import { deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
 
 export default function Watchlists() {
@@ -24,6 +24,19 @@ export default function Watchlists() {
         setLoading(false);
       }
     }
+
+  const handleDeleteWatchlist = async (id) => {
+    if (!confirm('Are you sure you want to delete this watchlist?')) {
+      return;
+    }
+
+    try {
+      await deleteWatchlist(id);
+      fetchWatchlists();
+    } catch (error) {
+      console.error('Error deleting watchlist:', error)
+    }
+  }
   
   
   return (
@@ -40,12 +53,20 @@ export default function Watchlists() {
               {watchlists.map((list) => (
                 <li
                   key={list._id}
-                  onClick={() => navigate(`/watchlists/${list._id}`)}
-                  className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 cursor-pointer"
+                   className="relative bg-purple-950/50 p-4 rounded-lg border border-purple-700 hover:bg-purple-900/60 transition"
                 >
-                  <h2 className="text-xl font-semibold">{list.name}</h2>
-                  <p className="text-gray-400">{list.movies.length} movies</p>
-                </li>
+                  <div onClick={() => navigate(`/watchlists/${list._id}`)}
+                    className='cursor-pointer'>
+                    <h2 className='text-xl font-semibold'>{list.name}</h2>
+                    <p className='text-gray-400'>{list.movies.length} movies</p>
+                  </div>
+
+                  <button onClick={() => handleDeleteWatchlist(list._id)}
+                    className="absolute top-3 right-3 bg-purple-800/60 text-purple-200 hover:bg-purple-700 hover:text-white px-2 py-1 rounded-md transition"
+                    title='Delete Watchlist'>
+                      ✕
+                  </button>
+                </li>          
               ))}
             </ul>
           )}
