@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
 
@@ -7,11 +7,9 @@ export default function Watchlists() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchWatchlists();
-  }, []);
 
-  const fetchWatchlists = async () => {
+
+  const fetchWatchlists = useCallback(async ()  => {
       try {
         const data = await getUserWatchlist();
         setWatchlist(data.watchlists || []);
@@ -23,7 +21,11 @@ export default function Watchlists() {
       } finally {
         setLoading(false);
       }
-    }
+    }, [navigate]);
+
+  useEffect(() => {
+    fetchWatchlists();
+  }, [fetchWatchlists]);
 
   const handleDeleteWatchlist = async (id) => {
     if (!confirm('Are you sure you want to delete this watchlist?')) {
