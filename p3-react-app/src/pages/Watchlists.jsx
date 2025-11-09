@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
+import { createWatchlist, deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
 import { Plus } from 'lucide-react';
 
@@ -8,7 +8,7 @@ export default function Watchlists() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [isCreatingWatchlist, setIsCreatingWatchlist] = useState(false);
   const [newWatchlistLabel, setNewWatchlistLabel] = useState('');
 
 
@@ -31,6 +31,22 @@ export default function Watchlists() {
     fetchWatchlists();
   }, [fetchWatchlists]);
 
+  const handleCreateWatchlist = async (e) => {
+    e.preventDefault()
+    if (!newWatchlistLabel.trim()) {
+      return;
+    }
+
+    try {
+      await createWatchlist(newWatchlistLabel);
+      setNewWatchlistLabel('');
+      setIsCreatingWatchlist(false);
+      await fetchWatchlists();
+    } catch (error) {
+      console.error('Error creating watchlist', error);
+    }
+  }
+
   const handleDeleteWatchlist = async (id) => {
     if (!confirm('Are you sure you want to delete this watchlist?')) {
       return;
@@ -50,10 +66,37 @@ export default function Watchlists() {
       <div className='max-w-6xl mx-auto px-4 text-white'>
         <div className='flex justify-between items-center mb-6'>
           <h1 className='text-4xl font-bold mb-6'>Your Watchlists</h1>
-          <button onClick={() => setShowCreateForm(!showCreateForm)} className='bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition'>
-            <Plus size={20}/>
-            New Watchlist
-          </button>
+          
+          {!isCreatingWatchlist ? (
+            <button onClick={() => setIsCreatingWatchlist(true)} className='bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition'>
+              <Plus size={20}/>
+              Watchlist
+            </button>
+          ) : (
+            <form onSubmit={handleCreateWatchlist} className='mt-4 flex gap-2'>
+              <input type='text' value={newWatchlistLabel}
+                onChange={(e) => setNewWatchlistLabel(e.target.value)}
+                placeholder='Enter watchlist name...'
+                className='flex-1 px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500'
+                autoFocus
+              />
+              <button type='submit' className='bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition'>
+                Create
+              </button>
+
+              <button
+                type='button'
+                onClick={() => {
+                  setIsCreatingWatchlist(false);
+                  setNewWatchlistLabel('')
+                }}
+                className='bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded transition'
+              >
+                Cancel
+              </button>
+            </form>
+          )}
+
         </div>
 
           {loading ? (
