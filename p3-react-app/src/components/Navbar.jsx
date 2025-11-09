@@ -10,6 +10,7 @@ export default function Navbar({token, setToken}) {
   function handleLogout() {
     localStorage.removeItem("token");
     setToken(null);
+    navigate('/');
   }
 
   const handleSearch = (e) => {
