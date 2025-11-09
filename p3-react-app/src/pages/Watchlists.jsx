@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
+import { Plus } from 'lucide-react';
 
 export default function Watchlists() {
   const [watchlists, setWatchlist] = useState([]);
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
+
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newWatchlistLabel, setNewWatchlistLabel] = useState('');
 
 
 
@@ -44,7 +48,13 @@ export default function Watchlists() {
   return (
     <main className='min-h-screen py-10'>
       <div className='max-w-6xl mx-auto px-4 text-white'>
-        <h1 className='text-4xl font-bold mb-6'>Your Watchlists</h1>
+        <div className='flex justify-between items-center mb-6'>
+          <h1 className='text-4xl font-bold mb-6'>Your Watchlists</h1>
+          <button onClick={() => setShowCreateForm(!showCreateForm)} className='bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition'>
+            <Plus size={20}/>
+            New Watchlist
+          </button>
+        </div>
 
           {loading ? (
             <p>Loading...</p>
