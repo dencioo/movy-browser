@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { createWatchlist, deleteWatchlist, getUserWatchlist } from '../api/watchlistService';
+import { createWatchlist, deleteWatchlist, getUserWatchlist, renameWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
 import { Plus } from 'lucide-react';
 
@@ -10,6 +10,9 @@ export default function Watchlists() {
 
   const [isCreatingWatchlist, setIsCreatingWatchlist] = useState(false);
   const [newWatchlistLabel, setNewWatchlistLabel] = useState('');
+
+  const [editId, setEditId] = useState(null);
+  const [editLabel, setEditLabel] = useState('');
 
 
 
@@ -59,6 +62,21 @@ export default function Watchlists() {
       console.error('Error deleting watchlist:', error)
     }
   }
+
+  const handleRenameWatchlist = async (id) => {
+    if (!editLabel.trim()) {
+      return
+    }
+
+    try {
+      await renameWatchlist(id, editLabel);
+      setEditId(null);
+      setEditLabel('');
+      await fetchWatchlists();
+    } catch (error) {
+      console.error( error.message ||'Error renaming watchlist:', error)
+    }
+  }
   
   
   return (
@@ -77,7 +95,7 @@ export default function Watchlists() {
               <input type='text' value={newWatchlistLabel}
                 onChange={(e) => setNewWatchlistLabel(e.target.value)}
                 placeholder='Enter watchlist name...'
-                className='flex-1 px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500'
+                className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 text-center'
                 autoFocus
               />
               <button type='submit' className='bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition'>
@@ -108,20 +126,66 @@ export default function Watchlists() {
               {watchlists.map((list) => (
                 <li
                   key={list._id}
-                   className="relative bg-purple-950/50 p-4 rounded-lg border border-purple-700 hover:bg-purple-900/60 transition"
+                   className="bg-purple-950/50 p-4 rounded-lg border border-purple-700 hover:bg-purple-900/60 transition relative"
                 >
-                  <div onClick={() => navigate(`/watchlists/${list._id}`)}
-                    className='cursor-pointer'>
-                    <h2 className='text-xl font-semibold'>{list.name}</h2>
-                    <p className='text-gray-400'>{list.movies.length} movies</p>
-                  </div>
-
-                  <button onClick={() => handleDeleteWatchlist(list._id)}
-                    className="absolute top-3 right-3 bg-purple-800/60 text-purple-200 hover:bg-purple-700 hover:text-white px-2 py-1 rounded-md transition"
-                    title='Delete Watchlist'>
-                      ✕
-                  </button>
-                </li>          
+                  {editId === list._id ? (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleRenameWatchlist(list._id)
+                      }}
+                      className='flex gap-2 items-center w-full'
+                    >
+                      <input
+                        type='text'
+                        value={editLabel}
+                        onChange={(e) => setEditLabel(e.target.value)}
+                        className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 text-center'
+                        autoFocus
+                        onFocus={(e) => e.target.select()}
+                      />
+                      <button type='submit' className='text-green-400 hover:text-green-300 text-xl'>✔</button>
+                      <button type='button' 
+                        onClick={() => {
+                          setEditId(null);
+                          setEditLabel('');
+                        }}
+                        className='text-red-400 hover:text-red-300 text-xl'
+                      >
+                        ✕
+                      </button>
+                    </form>
+                  ) : (
+                    <div className='flex items-center'>
+                      <div
+                        onClick={() => navigate(`/watchlist/${list._id}`)}
+                        className='cursor-pointer flex-1 text-center'
+                      >
+                        <h2 className='text-xl font-semibold'>{list.name}</h2>
+                        <p className='text-gray-400'>{list.movies.length} movies</p>
+                      </div>
+                      
+                      <div className='flex flex-col gap-2 ml-2'>
+                        <button
+                          onClick={() => {
+                            setEditId(list._id);
+                            setEditLabel(list.name);
+                          }}
+                          className='bg-purple-800/60 text-purple-200 hover:bg-purple-700 hover:text-white px-2 py-1 rounded-md transition'
+                          title="Rename Watchlist"
+                        >
+                          ✎
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteWatchlist(list._id)}
+                          className="bg-purple-800/60 text-purple-200 hover:bg-purple-700 hover:text-white px-2 py-1 rounded-md transition"
+                          title='Delete Watchlist'>
+                            ✕
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </li>       
               ))}
             </ul>
           )}
