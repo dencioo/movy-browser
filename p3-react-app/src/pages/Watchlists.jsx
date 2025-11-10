@@ -95,10 +95,10 @@ export default function Watchlists() {
               <input type='text' value={newWatchlistLabel}
                 onChange={(e) => setNewWatchlistLabel(e.target.value)}
                 placeholder='Enter watchlist name...'
-                className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 text-center'
+                className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500'
                 autoFocus
               />
-              <button type='submit' className='bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition'>
+              <button type='submit' className='text-white px-4 py-2 rounded'>
                 Create
               </button>
 
@@ -108,7 +108,7 @@ export default function Watchlists() {
                   setIsCreatingWatchlist(false);
                   setNewWatchlistLabel('')
                 }}
-                className='bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded transition'
+                className='text-white px-4 py-2 rounded'
               >
                 Cancel
               </button>
@@ -126,7 +126,7 @@ export default function Watchlists() {
               {watchlists.map((list) => (
                 <li
                   key={list._id}
-                   className="bg-purple-950/50 p-4 rounded-lg border border-purple-700 hover:bg-purple-900/60 transition relative"
+                   className="bg-purple-950/50 p-4 rounded-lg border border-purple-700 hover:bg-purple-900/60 transition"
                 >
                   {editId === list._id ? (
                     <form
@@ -140,7 +140,7 @@ export default function Watchlists() {
                         type='text'
                         value={editLabel}
                         onChange={(e) => setEditLabel(e.target.value)}
-                        className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 text-center'
+                        className='flex-1 min-w-0 px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 '
                         autoFocus
                         onFocus={(e) => e.target.select()}
                       />
