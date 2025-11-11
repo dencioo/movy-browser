@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { getWatchlistById } from '../api/watchlistService';
+import { getWatchlistById, removeMovieFromWatchlist } from '../api/watchlistService';
 import MovieCard from '../components/MovieCard';
 
 export default function WatchlistDetails() {
@@ -10,24 +10,36 @@ export default function WatchlistDetails() {
   const [watchlist, setWatchlist] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  
-  useEffect(() => {
-    async function fetchWatchlistsDetails() {
-      try {
-        const data = await getWatchlistById(id);
+  const fetchWatchlistsDetails = useCallback(async () => {
+    try {
+      const data = await getWatchlistById(id);
         setWatchlist(data.watchlist);
-      } catch (error) {
-        console.error('Error fetching watchlist details:', error);
-
-        if (error.message.includes('401')) {
+    } catch (error) {
+      console.error('Error fetching watchlist details:', error);
+      if (error.message.includes('401')) {
           navigate('/login');
         }
-      } finally {
+    } finally {
         setLoading(false);
-      }
-  }
+    }
+  }, [id, navigate])
+  
+  useEffect(() => {
     fetchWatchlistsDetails();
-  }, [id, navigate]);
+  }, [fetchWatchlistsDetails]);
+
+  const handleRemoveMovie = async (movieId) => {
+    if (!confirm('Remove this movie from the watchlist?')) {
+      return
+    }
+
+    try {
+      await removeMovieFromWatchlist(id, movieId);
+      fetchWatchlistsDetails();
+    } catch (error) {
+      console.error('Error removing movie:', error);
+    }
+  }
 
   if (loading) {
     return <p className="text-white text-center mt-10">Loading</p>;
