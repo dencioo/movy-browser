@@ -158,7 +158,7 @@ export default function Watchlists() {
                   ) : (
                     <div className='flex items-center'>
                       <div
-                        onClick={() => navigate(`/watchlist/${list._id}`)}
+                        onClick={() => navigate(`/watchlists/${list._id}`)}
                         className='cursor-pointer flex-1 text-center'
                       >
                         <h2 className='text-xl font-semibold'>{list.name}</h2>
