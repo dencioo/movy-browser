@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { getWatchlistById, removeMovieFromWatchlist } from '../api/watchlistService';
-import MovieCard from '../components/MovieCard';
+import { Trash2 } from 'lucide-react'
 
 export default function WatchlistDetails() {
   const { id } = useParams();
@@ -49,6 +49,42 @@ export default function WatchlistDetails() {
     return <p>Watchlist not found</p>
   }
 
+  const MovieItem = ({movie}) => {
+    const date = new Date(movie.releaseDate);
+    const month = date.toLocaleDateString('default', {month: 'short'});
+    const year = date.getFullYear();
+    const releaseDate = `${month} ${year}`;
+
+    const imageUrl = movie.posterPath
+    ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
+    : '/No-Image-Placeholder.svg';
+
+    const starRating = (movie.voteAverage / 2).toFixed(1);
+
+    return (
+      <div className='bg-gray-800 text-white rounded p-4 flex flex-col justify-between h-full relative group'>
+        <button
+          onClick={() => handleRemoveMovie(movie._id)}
+          className='absolute top-2 right-2 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10'
+          title='Remove from watchlist'
+          >
+          <Trash2 size={16} />
+        </button>
+
+        <Link to={`/movie/${movie.tmdbId}`} className="block">
+          <img src={imageUrl} alt={movie.title} className='rounded mb-2 w-full'/>
+          <div className='flex flex-col flex-grow items-center justify-center text-center'>
+            <h2 className='text-lg font-semibold text-center mb-2'>{movie.title}</h2>
+            <p className='text-sm text-gray-300 flex justify-center items-center gap-2 mt-auto'>
+              <span className='bg-gray-700 px-2 py-0.5 mt-2 rounded-full'>⭐ {starRating}</span>
+              <span className="bg-gray-700 px-2 py-0.5 mt-2 rounded-full">📅 {releaseDate}</span>
+            </p>
+          </div>
+        </Link>
+      </div>
+    )
+  }
+
   return (
     <main className='min-h-screen py-10 text-white'>
       <div className='max-w-6xl mx-auto px-4'>
@@ -63,9 +99,8 @@ export default function WatchlistDetails() {
         ) : (
           <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
             {watchlist.movies.map(movie => (
-              <MovieCard key={movie.id} movie={movie} />
+              <MovieItem key={movie._id} movie={movie}/>
             ))}
-
           </div>
         )}
       </div>
