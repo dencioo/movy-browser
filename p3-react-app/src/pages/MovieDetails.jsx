@@ -1,6 +1,7 @@
   import { useEffect, useState } from 'react';
   import { Navigate, useNavigate, useParams } from 'react-router';
   import { fetchMovieDetails, fetchMovieProviders } from '../services/movieService';
+import { getUserWatchlist } from '../api/watchlistService';
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 
@@ -10,6 +11,7 @@
     const navigate = useNavigate();
     const [providers, setProviders] = useState([]);
     const [ loading, setLoading ] = useState(true);
+    const [watchlists, setWatchlist] = useState([]);
 
     useEffect(() => {
       async function fetchDetails(id) {
@@ -19,12 +21,22 @@
 
           const providerData = await fetchMovieProviders(id);
           setProviders(providerData)
+
+          // Fetch user's watchlist token if logged in
+          const token = localStorage.getItem('token');
+            if (token) {
+              try {
+                const watchlistData = await getUserWatchlist();
+                setWatchlist(watchlistData.watchlists || []);
+              } catch (error) {
+                console.error('Error fetching watchlists:', error)
+              }
+          }
         } catch (error) {
           console.error('Failed to fetch movie details:', error)
         } finally {
           setLoading(false);
         }
-        
       }
 
       if (id) {
