@@ -51,13 +51,14 @@
         }
 
         const syncedMovie = await syncMovieToBackend(movieData);
+        const movieId = syncedMovie.movie._id;
 
-        await addMovieToWatchlist(watchlistId, syncedMovie._id);
+        await addMovieToWatchlist(watchlistId, movieId);
 
         alert('Movie added to watchlist!');
       } catch (error) {
         console.error('Error adding to watchlist:', error);
-        alert('Failed to add watchlist');
+        alert('Failed to add movie to watchlist');
       } finally {
         setAddingToWatchlist(false);
       }
@@ -84,7 +85,7 @@
     >
       <div className="p-4 text-white max-w-4xl mx-auto">
         <div className="flex justify-between items-start mb-4">
-          <h1 className="text-2xl font-bold">{movie.title}</h1>
+          <h1 className="text-3xl font-bold">{movie.title}</h1>
           
           {localStorage.getItem('token') && (
             <div className="relative">
@@ -96,9 +97,9 @@
                 <Plus size={20} />
                 Add to Watchlist
               </button>
-
+              
               {showWatchlistMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl z-10 max-h-64 overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl/30 z-10 max-h-64 overflow-y-auto">
                   {watchlists.length === 0 ? (
                     <div className="p-4 text-center text-gray-400">
                       <p className="mb-2">No watchlists yet</p>
