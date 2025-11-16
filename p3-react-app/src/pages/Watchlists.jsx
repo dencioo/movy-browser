@@ -118,7 +118,7 @@ export default function Watchlists() {
         </div>
 
           {loading ? (
-            <p>Loading...</p>
+            <div className="min-h-[300px] flex items-center justify-center">Loading...</div>
           ) : watchlists.length === 0 ? (
             <p>No watchlist found. Create one from a movie page!</p>
           ) : (
