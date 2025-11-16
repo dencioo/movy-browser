@@ -14,6 +14,16 @@
     const [watchlists, setWatchlist] = useState([]);
     const [addingToWatchlist, setAddingToWatchlist] = useState(false);
     const [showWatchlistMenu, setShowWatchlistMenu] = useState(false);
+    const [toast, setToast] = useState(null);
+    const [toastVisible, setToastVisible] = useState(false);
+
+    useEffect(() => {
+      if (toast) {
+        const time = setTimeout(() => setToast(null), 3000);
+
+        return () => {clearTimeout(time)};
+      }
+    })
 
     useEffect(() => {
       async function fetchDetails(id) {
@@ -55,7 +65,13 @@
 
         await addMovieToWatchlist(watchlistId, movieId);
 
-        alert('Movie added to watchlist!');
+        setToast('Movie added to watchlist!');
+        setToastVisible(true);
+
+        setTimeout(() => {
+          setToastVisible(false);
+        }, 3000)
+        
       } catch (error) {
         console.error('Error adding to watchlist:', error);
         alert('Failed to add movie to watchlist');
@@ -136,6 +152,16 @@
           alt={movie.title}
           className="w-104 rounded-md mb-4 shadow-lg mx-auto"
         />
+
+        {toast && (
+          <div
+            className={`bg-purple-950/50 p-4 rounded-lg border border-purple-700 mb-4 text-center max-w-sm mx-auto transition-opacity duration-500  ${
+              toastVisible ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {toast}
+          </div>
+        )}
 
         <p className="mb-10 text-3xl text-gray-300">{movie.tagline}</p>
         <p className="mb-2 text-gray-200">
