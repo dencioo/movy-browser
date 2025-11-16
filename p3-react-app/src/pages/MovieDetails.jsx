@@ -74,7 +74,12 @@
         
       } catch (error) {
         console.error('Error adding to watchlist:', error);
-        alert('Failed to add movie to watchlist');
+        
+        const message = error?.response?.data?.message || error?.message || 'Failed to add movie to watchlist';
+
+        setToast(message);
+        setToastVisible(true);
+        setTimeout(() => setToastVisible(false), 3000);
       } finally {
         setAddingToWatchlist(false);
       }
