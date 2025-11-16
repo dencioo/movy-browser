@@ -16,7 +16,7 @@ export default function TopRated() {
     getTopRatedMovies();
   }, []);
   return (
-    <main className='space-y-10 py-10'>
+    <main className='py-10 min-h-screen'>
       <div className='p-4 text-white text-3xl'>
         <h1 className='font-bold text-center mb-6'>Top Rated Movies</h1>
         <MovieGrid movies={movies}/>

@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     
-    <main className='space-y-10 py-10'>
+    <main className='py-10 min-h-screen'>
       <header>
         <p className='text-lg text-center text-gray-400 italic'>
           Today is {currentDate}</p>
