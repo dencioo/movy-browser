@@ -151,22 +151,24 @@
             </div>
           )}
         </div>
+        
+        <div className='relative'>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            className="w-104 rounded-md mb-4 shadow-lg mx-auto"
+          />
 
-        <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.title}
-          className="w-104 rounded-md mb-4 shadow-lg mx-auto"
-        />
-
-        {toast && (
-          <div
-            className={`bg-purple-950/50 p-4 rounded-lg border border-purple-700 mb-4 text-center max-w-sm mx-auto transition-opacity duration-500  ${
-              toastVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {toast}
-          </div>
-        )}
+          {toast && (
+            <div
+              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-purple-950/90 p-4 rounded-lg border border-purple-700 text-white max-w-sm text-center transition-opacity duration-300 z-50 ${
+                toastVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {toast}
+            </div>
+          )}
+        </div>
 
         <p className="mb-10 text-3xl text-gray-300">{movie.tagline}</p>
         <p className="mb-2 text-gray-200">
