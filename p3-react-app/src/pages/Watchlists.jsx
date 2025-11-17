@@ -13,7 +13,7 @@ export default function Watchlists() {
 
   const [editId, setEditId] = useState(null);
   const [editLabel, setEditLabel] = useState('');
-
+  const [toast, setToast] = useState(null);
 
 
   const fetchWatchlists = useCallback(async ()  => {
@@ -31,6 +31,13 @@ export default function Watchlists() {
     }, [navigate]);
 
   useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  useEffect(() => {
     fetchWatchlists();
   }, [fetchWatchlists]);
 
@@ -42,6 +49,7 @@ export default function Watchlists() {
 
     try {
       await createWatchlist(newWatchlistLabel);
+      setToast('Watchlist created!')
       setNewWatchlistLabel('');
       setIsCreatingWatchlist(false);
       await fetchWatchlists();
@@ -57,6 +65,7 @@ export default function Watchlists() {
 
     try {
       await deleteWatchlist(id);
+      setToast('Your watchlist is deleted');
       fetchWatchlists();
     } catch (error) {
       console.error('Error deleting watchlist:', error)
@@ -70,6 +79,7 @@ export default function Watchlists() {
 
     try {
       await renameWatchlist(id, editLabel);
+      setToast('Watchlist renamed!')
       setEditId(null);
       setEditLabel('');
       await fetchWatchlists();
@@ -81,7 +91,14 @@ export default function Watchlists() {
   
   return (
     <main className='min-h-screen py-10'>
-      <div className='max-w-6xl mx-auto px-4 text-white'>
+      <div className='max-w-6xl mx-auto px-4 text-white relative'>
+
+        {toast && (
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-900 px-4 py-2 rounded-lg animate-fade z-50">
+              {toast}
+            </div>
+          )}
+
         <div className='flex justify-between items-center mb-6'>
           <h1 className='text-4xl font-bold mb-6'>Your Watchlists</h1>
           
