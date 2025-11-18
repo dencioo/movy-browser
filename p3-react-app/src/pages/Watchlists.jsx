@@ -15,6 +15,11 @@ export default function Watchlists() {
   const [editLabel, setEditLabel] = useState('');
   const [toast, setToast] = useState(null);
 
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    watchlistId: null,
+  })
+
 
   const fetchWatchlists = useCallback(async ()  => {
       try {
