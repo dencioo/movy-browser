@@ -64,10 +64,6 @@ export default function Watchlists() {
   }
 
   const handleDeleteWatchlist = async (id) => {
-    if (!confirm('Are you sure you want to delete this watchlist?')) {
-      return;
-    }
-
     try {
       await deleteWatchlist(id);
       setToast('Your watchlist is deleted');
@@ -97,7 +93,32 @@ export default function Watchlists() {
   return (
     <main className='min-h-screen py-10'>
       <div className='max-w-6xl mx-auto px-4 text-white relative'>
-
+        {confirmModal.open && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100]">
+            <div className='bg-purple-950 p-6 rounded-xl shadow-xl border border-purple-700 max-w-sm w-full text-center'>
+              <h2 className="text-xl font-semibold mb-2">Delete Watchlist?</h2>
+              <p className='text-gray-300 mb-6'>This action cannot be undone</p>
+              <div className='flex justify-center gap-4'>
+                <button
+                  onClick={async () => {
+                    await handleDeleteWatchlist(confirmModal.watchlistId);
+                    setConfirmModal({open: false, watchlistId: null});
+                    
+                  }}
+                  
+                  >
+                    Yes, Delete
+                </button>
+                <button
+                  onClick={() => setConfirmModal({ open: false, watchlistId: null })}
+                  >
+                    Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        
         {toast && (
             <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-900 px-4 py-2 rounded-lg animate-fade z-50">
               {toast}
@@ -199,7 +220,7 @@ export default function Watchlists() {
                           ✎
                         </button>
                         <button 
-                          onClick={() => handleDeleteWatchlist(list._id)}
+                          onClick={() => setConfirmModal({ open: true, watchlistId: list._id })}
                           className="bg-purple-800/60 text-purple-200 hover:bg-purple-700 hover:text-white px-2 py-1 rounded-md transition"
                           title='Delete Watchlist'>
                             ✕
