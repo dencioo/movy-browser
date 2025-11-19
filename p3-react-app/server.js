@@ -21,10 +21,10 @@ app.get('/health', (req, res) => {
 // Serve static files from dist
 app.use(express.static(join(__dirname, 'dist')));
 
-app.get('/:path*', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
   console.log(`Frontend server running on port ${PORT}`);
-})
+});
