@@ -10,6 +10,7 @@ export default function Navbar({token, setToken}) {
   function handleLogout() {
     localStorage.removeItem("token");
     setToken(null);
+    navigate('/');
   }
 
   const handleSearch = (e) => {
@@ -25,7 +26,7 @@ export default function Navbar({token, setToken}) {
   if (token) {
     authLinks = ( 
       <>
-        <Link to="/watchlists" className="text-white hover:text-gray-300 font-bold">
+        <Link to="/watchlists" className="text-white hover:text-gray-300 font-bold h-10 flex items-center px-3">
           My Watchlists
         </Link>
         <button onClick={handleLogout} className="font-bold hover:text-gray-300 bg-red-500 px-3 py-1 rounded-full">
@@ -47,7 +48,7 @@ export default function Navbar({token, setToken}) {
   }
   
   return (
-    <nav className="p-4 text-white bg-gray-800 flex flex-wrap items-center gap-4 justify-between">
+    <nav className="h-16 px-4 text-white bg-gray-800 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <Link to="/" className='text-white hover:text-gray-300 font-bold'>Home</Link>
         <Link to="/top-rated" className='text-white hover:text-gray-300 font-bold'>Top Rated</Link>
@@ -56,7 +57,7 @@ export default function Navbar({token, setToken}) {
       </div>
 
       {location.pathname !== '/search' && (
-        <form onSubmit={handleSearch} className="flex-1 max-w-md">
+        <form onSubmit={handleSearch} className="flex-1 max-w-md mx-4">
           <div className="relative">
             <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <input

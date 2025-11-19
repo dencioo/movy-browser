@@ -7,6 +7,8 @@ import Trending from '../pages/Trending';
 import Search from '../components/Search';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import Watchlists from '../pages/Watchlists';
+import WatchlistDetails from '../pages/WatchlistDetails';
 
 
 
@@ -21,6 +23,8 @@ const AppRoutes = ({setToken}) => {
       <Route path="/search" element={<Search />} />
       <Route path='/login' element={<Login setToken={setToken}/>} />
       <Route path='/register' element={<Register setToken={setToken}/>} />
+      <Route path='/watchlists' element={<Watchlists />} />
+      <Route path='/watchlists/:id' element={<WatchlistDetails />} />
     </Routes>
   )
 }

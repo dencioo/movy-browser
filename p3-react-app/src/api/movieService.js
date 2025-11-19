@@ -1,10 +1,10 @@
-import MOVYAPI_BASEURL from './apiConfig';
+import MOVY_API_BASE_URL from './apiConfig';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 export async function fetchPopularMoviesBackend() {
   try {
-    const res = await fetch(`${MOVYAPI_BASEURL}/movies/popular`);
+    const res = await fetch(`${MOVY_API_BASE_URL}/movies/popular`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch movies from backend");
