@@ -25,11 +25,11 @@ Movy Browser is my personal React app for browsing movies. It’s a simple, inte
 3. Add your .env file with your TMDB API key:
    ```bash
    VITE_TMDB_API_KEY=your_tmdb_api_key_here
-   VITE_MOVY_API=https://movy-api.onrender.com/
+   VITE_MOVY_API=https://movyapi.up.railway.app/api
 4. Start the development server:
    ```bash
    npm run dev
 
 ## Deployment
-You can see the live app here: https://movy-browser.onrender.com/
+You can see the live app here: https://movybrowser.vercel.app/
 
