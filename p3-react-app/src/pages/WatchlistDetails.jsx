@@ -10,6 +10,11 @@ export default function WatchlistDetails() {
   const [watchlist, setWatchlist] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    movieId: null,
+  })
+
   const fetchWatchlistsDetails = useCallback(async () => {
     try {
       const data = await getWatchlistById(id);
@@ -29,15 +34,23 @@ export default function WatchlistDetails() {
   }, [fetchWatchlistsDetails]);
 
   const handleRemoveMovie = async (movieId) => {
-    if (!confirm('Remove this movie from the watchlist?')) {
-      return
-    }
+    setConfirmModal({
+      open: true,
+      movieId
+    })
+  }
 
+  const confirmRemoveMovie = async () => {
     try {
-      await removeMovieFromWatchlist(id, movieId);
+      await removeMovieFromWatchlist(id, confirmModal.movieId);
       fetchWatchlistsDetails();
     } catch (error) {
       console.error('Error removing movie:', error);
+    } finally {
+      setConfirmModal({ 
+        open: false,
+        movieId: null
+      })
     }
   }
 
