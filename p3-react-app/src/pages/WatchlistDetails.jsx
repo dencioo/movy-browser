@@ -101,6 +101,30 @@ export default function WatchlistDetails() {
   return (
     <main className='min-h-screen py-10 text-white'>
       <div className='max-w-6xl mx-auto px-4'>
+
+        {confirmModal.open && (
+          <div className='fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100]'>
+            <div className='bg-purple-950 p-6 rounded-xl shadow-xl border border-purple-700 max-w-sm w-full text-center'>
+              <h2 className='text-xl font-semibold mb-2'>Remove Movie?</h2>
+              <p className='text-gray-300 mb-6'>This action cannot be undone</p>
+
+              <div className='flex justify-center gap-4'>
+                <button
+                  onClick={confirmRemoveMovie}
+                  className='bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded'>
+                    Remove
+                </button>
+
+                <button
+                  onClick={() => setConfirmModal({open: false, movieId: null})}
+                  className='bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded'
+                  >
+                    Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <button onClick={() => navigate(-1)} className='mb-4 text-purple-400 hover:text-purple-300'>
           ← Back
         </button>
