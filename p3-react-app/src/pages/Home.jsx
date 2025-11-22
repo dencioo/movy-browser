@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ScrollTopButton from '../components/ScrollTopButton'
 import NowPlaying from './NowPlaying'
 import Popular from './Popular'
+import { PageLoader } from '../components/Spinner';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -29,9 +30,7 @@ export default function Home() {
       </header>
 
       {loading ? (
-          <div className="flex justify-center py-10 text-gray-300">
-            Loading...
-          </div>
+          <PageLoader />
         ) : (
           <>
             <section>
