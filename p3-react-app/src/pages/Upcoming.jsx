@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchUpcomingMovies } from '../services/movieService';
 import MovieGrid from '../components/MovieGrid';
+import { PageLoader } from '../components/Spinner';
 
 export default function Upcoming() {
   const [movies, setMovies] = useState([]);
@@ -25,10 +26,7 @@ export default function Upcoming() {
         
         {loading ? 
           (
-            <div className="flex justify-center py-10 text-gray-300">
-              Loading...
-            </div>
-
+            <PageLoader />
           ) : (
             <MovieGrid movies={movies}/>
           )}

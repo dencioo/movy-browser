@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchTopRatedMovies } from '../services/movieService';
 import MovieGrid from '../components/MovieGrid';
+import { PageLoader } from '../components/Spinner';
 
 export default function TopRated() {
   const [movies, setMovies] = useState([]);
@@ -25,9 +26,7 @@ export default function TopRated() {
         <h1 className='font-bold text-center mb-6 text-3xl'>Top Rated Movies</h1>
 
         {loading ? (
-          <div className="flex justify-center py-10 text-gray-300">
-            Loading...
-          </div>
+          <PageLoader />
         ) : (
           <MovieGrid movies={movies} />
         )}

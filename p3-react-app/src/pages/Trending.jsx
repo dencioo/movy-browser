@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchTrendingMovies } from '../services/movieService';
 import MovieGrid from '../components/MovieGrid';
 import TimeToggle from '../components/TimeToggle';
+import { PageLoader } from '../components/Spinner';
 
 export default function Trending() {
   const [movies, setMovies] = useState([]);
@@ -27,9 +28,7 @@ export default function Trending() {
         <TimeToggle timeSetting={timeSetting} setTimeSetting={setTimeSetting}/>
         
         {loading ? (
-          <div className="flex justify-center py-10 text-gray-300">
-            Loading...
-          </div>
+          <PageLoader />
         ) : (
           <MovieGrid movies={movies} />
         )}
