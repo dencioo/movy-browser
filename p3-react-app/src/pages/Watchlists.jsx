@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { createWatchlist, deleteWatchlist, getUserWatchlist, renameWatchlist } from '../api/watchlistService';
 import { useNavigate } from 'react-router';
 import { Plus } from 'lucide-react';
+import { PageLoader, WatchlistGridLoader } from '../components/Spinner';
 
 export default function Watchlists() {
   const [watchlists, setWatchlist] = useState([]);
@@ -161,7 +162,7 @@ export default function Watchlists() {
         </div>
 
           {loading ? (
-            <div className="min-h-[300px] flex items-center justify-center">Loading...</div>
+            <WatchlistGridLoader count={15}/>
           ) : watchlists.length === 0 ? (
             <p>No watchlist found. Create one from a movie page!</p>
           ) : (
