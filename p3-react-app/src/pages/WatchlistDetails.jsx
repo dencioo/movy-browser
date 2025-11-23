@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { getWatchlistById, removeMovieFromWatchlist } from '../api/watchlistService';
 import { Trash2 } from 'lucide-react'
+import { PageLoader } from '../components/Spinner';
 
 export default function WatchlistDetails() {
   const { id } = useParams();
@@ -55,7 +56,7 @@ export default function WatchlistDetails() {
   }
 
   if (loading) {
-    return <p className="text-white text-center mt-10">Loading</p>;
+    return <PageLoader />;
   }
 
   if (!watchlist) {
