@@ -1174,3 +1174,49 @@ button:focus-visible {
   text-align: center;
   margin: 0 0 28px;
 }
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input-icon {
+  position:  absolute;
+  left:      13px;
+  top:       50%;
+  transform: translateY(-50%);
+  color:     var(--text-muted);
+  pointer-events: none;
+}
+.auth-input {
+  width:         100%;
+  padding:       10px 14px 10px 38px;
+  border-radius: var(--radius-md);
+  background:    var(--bg-elevated);
+  border:        1px solid var(--border-base);
+  color:         var(--text-primary);
+  font-size:     .9375rem;
+  font-family:   var(--font-sans);
+  outline:       none;
+  transition:    border-color var(--transition-fast),
+                 box-shadow var(--transition-fast);
+}

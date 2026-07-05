@@ -1,7 +1,7 @@
   import { useState } from "react";
   import { loginUser } from "../api/auth";
   import { useNavigate } from 'react-router';
-import { Clapperboard } from 'lucide-react';
+import { Clapperboard, Mail } from 'lucide-react';
 
   export default function Login({setToken}) {
     const [email, setEmail] = useState("");
@@ -37,15 +37,23 @@ import { Clapperboard } from 'lucide-react';
           <h1 className="auth-title">Welcome back</h1>
           <p className='auth-subtitle'>Sign in to your account to continue</p>
           
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={evemt => setEmail(evemt.target.value)}
-              required
-              className="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className='auth-field'>
+              <label className='auth-label' htmlFor='email'>Email</label>
+              <div className='auth-input-wrap'>
+                <Mail size={15} strokeWidth={1.75} className='auth-input-icon'/>
+                <input
+                  id='email'
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={event => setEmail(event.target.value)}
+                  required
+                  className="auth-input"
+                  autoComplete='email'
+                />
+              </div>
+            </div>
             <input
               type="password"
               placeholder="Password"
