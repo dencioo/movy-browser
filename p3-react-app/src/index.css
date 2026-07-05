@@ -1158,3 +1158,19 @@ button:focus-visible {
   color:          var(--text-primary);
 }
 .auth-logo__dot { color: var(--purple-400); }
+
+.auth-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.auth-subtitle {
+  font-size: .875rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 28px;
+}

@@ -34,7 +34,9 @@ import { Clapperboard } from 'lucide-react';
             </span>
           </div>
           
-          <h1 className="text-3xl font-bold text-center text-white mb-6">Login</h1>
+          <h1 className="auth-title">Welcome back</h1>
+          <p className='auth-subtitle'>Sign in to your account to continue</p>
+          
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
             <input
               type="email"
