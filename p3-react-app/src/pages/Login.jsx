@@ -1,12 +1,13 @@
   import { useState } from "react";
   import { loginUser } from "../api/auth";
-  import { useNavigate } from 'react-router';
-import { Clapperboard, Mail } from 'lucide-react';
+  import { Link, useNavigate } from 'react-router';
+import { Clapperboard, Lock, LogIn, Mail } from 'lucide-react';
 
   export default function Login({setToken}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [error, setError] = useState('');
+    const [loading, setLoading]   = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,10 +16,11 @@ import { Clapperboard, Mail } from 'lucide-react';
         const data = await loginUser({ email, password });
         localStorage.setItem("token", data.success.token); // store JWT
         setToken(data.success.token);
-        setMessage("Login successful!");
         navigate("/");
       } catch (error) {
-        setMessage(error.message || "Login failed");
+        setError(error.message || "Invalid email or password");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -54,24 +56,40 @@ import { Clapperboard, Mail } from 'lucide-react';
                 />
               </div>
             </div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-              required
-              className="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+
+            <div className='auth-field'>
+              <label className='auth-label' htmlFor='password'>Password</label>
+              <div className='auth-input-wrap'>
+                <Lock size={15} strokeWidth={1.75} className='auth-input-icon' />
+                <input
+                  id='password'
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={event => setPassword(event.target.value)}
+                  required
+                  className="auth-input"
+                  autoComplete='current-password'
+                />
+              </div>
+            </div>
+
+            {error && <p className='auth-error'>{error}</p>}
+
             <button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded transition"
+              className="auth-submit"
+              disabled={loading}
             >
-              Login
+              <LogIn size={15} strokeWidth={2}/>
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
+          
           </form>
-          {message && (
-            <p className="mt-4 text-center text-sm text-yellow-400">{message}</p>
-          )}
+          <p className='auth-switch'>
+            Don't have an account?{' '}
+            <Link to='/register' className='auth-switch__link'>Create one</Link>
+          </p>
         </div>
     </div>
     );
