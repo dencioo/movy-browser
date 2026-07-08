@@ -1,24 +1,30 @@
 import { useState } from 'react';
 import { registerUser } from '../api/auth';
-import { Clapperboard, Lock, LockIcon, Mail, User, UserPlus } from 'lucide-react';
+import { Clapperboard, Lock, Mail, User, UserPlus } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
 
-export default function Register() {
+export default function Register({setToken}) {
   const [ name, setName ] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
+    setLoading(true)
 
     try {
       const data = await registerUser({name, email, password});
-      localStorage.setItem("token", data.token) // store JWT
-      setMessage("Registration succesful");
+      localStorage.setItem("token", data.success.token) // store JWT
+      setToken(data.success.token);
+      navigate('/')
     } catch (error) {
-      setMessage(error.message || "Registration failed")
+      setError(error.message || "Registration failed. Please try again.")
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,7 +103,6 @@ export default function Register() {
           >
             <UserPlus size={15} strokeWidth={2}/>
             {loading ? 'Creating account...' : 'Create account'}
-            Register
           </button>
         </form>
         
