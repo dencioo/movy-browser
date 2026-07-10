@@ -1,6 +1,7 @@
 import ScrollTopButton from '../components/ScrollTopButton'
 import NowPlaying from './NowPlaying'
 import Popular from './Popular'
+import TopRatedSection from './TopRatedSection'
 
 export default function Home() {
 
@@ -14,13 +15,15 @@ export default function Home() {
     
     <main className='home-page'>
       <div className='home-date'>{currentDate}</div>
-      <section className='home-section'>
-        <NowPlaying />
-      </section>
 
       <section className='home-section'>
         <Popular />
       </section>
+
+      <section className='home-section'>
+        <TopRatedSection />
+      </section>
+
       <ScrollTopButton />
     </main>
     
