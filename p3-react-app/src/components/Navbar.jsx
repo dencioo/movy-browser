@@ -4,6 +4,8 @@ import {
   LogOut,
   BookMarked,
   User,
+  UserPlus,
+  LogIn,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -108,10 +110,12 @@ export default function Navbar({ token, setToken }) {
         ) : (
           <>
             <Link to='/login' className='movy-btn movy-btn--ghost'>
-              Login
+              <LogIn size={14} strokeWidth={2} />
+              <span className='movy-btn__label'>Login</span>
             </Link>
             <Link to='/register' className='movy-btn movy-btn--primary'>
-              Register
+              <UserPlus size={14} strokeWidth={2} />
+              <span className='movy-btn__label'>Register</span>
             </Link>
           </>
         )}

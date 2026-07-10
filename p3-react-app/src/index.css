@@ -1271,3 +1271,14 @@ auth-field {
   .auth-card { padding: 28px 20px 24px; }
 }
 
+/* button collapse */
+@media (max-width: 420px) {
+  .movy-btn__label {
+    display: none;
+  }
+
+  .movy-btn--ghost,
+  .movy-btn--primary {
+    padding: .4rem .5rem;
+  }
+}
