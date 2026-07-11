@@ -2,6 +2,8 @@ import ScrollTopButton from '../components/ScrollTopButton'
 import NowPlaying from './NowPlaying'
 import Popular from './Popular'
 import TopRatedSection from './TopRatedSection'
+import TrendingSection from './TrendingSection'
+import UpcomingSection from './UpcomingSection'
 
 export default function Home() {
 
@@ -22,6 +24,14 @@ export default function Home() {
 
       <section className='home-section'>
         <TopRatedSection />
+      </section>
+
+      <section className='home-section'>
+        <TrendingSection />
+      </section>
+
+      <section className='home-section'>
+        <UpcomingSection />
       </section>
 
       <ScrollTopButton />
