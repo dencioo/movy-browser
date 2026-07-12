@@ -1282,3 +1282,9 @@ auth-field {
     padding: .4rem .5rem;
   }
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

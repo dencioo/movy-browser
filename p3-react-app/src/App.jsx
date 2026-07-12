@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <div className='bg-gray-950'>
+    <div className='app'>
       <Header token={token} setToken={updateToken}/>
       <AppRoutes setToken={updateToken}/>
     </div>
