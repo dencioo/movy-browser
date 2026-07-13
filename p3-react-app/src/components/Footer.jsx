@@ -11,33 +11,35 @@ export default function Footer() {
           <div className='footer__logo-icon'>
             <Clapperboard size={16} strokeWidth={1.75}/>
           </div>
-          <span>
-            Movy<span>.</span>
+          <span className='footer__wordmark'>
+            Movy<span className='footer__dot'>.</span>
           </span>
         </Link>
 
-        <p> 
+        <p className='footer__copy'> 
           &copy; {year} Movy Browser. All rights reserved.
         </p>
 
-        <p> 
+        <p className='footer__author'> 
           Built by{' '}
           <a
             href='https://github.com/deyuun'
             target='_blank'
             rel='noopener noreferrer'
+            className='footer__tmdb-link'
           >
             Dean Harley Pal
           </a>
-          {' '}· deyuun
+          {' '}· @deyuun
         </p>
 
-        <p>
+        <p className='footer__tmdb'>
           Movie data provided by{' '}
           <a
             href='https://www.themoviedb.org'
             target='_blank'
             rel='noopener noreferrer'
+            className='footer__tmdb-link'
           >
             TMDB
           </a>
