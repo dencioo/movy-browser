@@ -110,7 +110,7 @@ export default function Watchlists() {
           {!isCreating ? (
             <button className='movy-btn movy-btn--primary' onClick={() => setIsCreating(true)}>
               <Plus size={15} strokeWidth={2.5} />
-              New list
+              New watchlist
             </button>
           ) : (
             <form onSubmit={handleCreate} className='wl-create-form'>
@@ -119,7 +119,7 @@ export default function Watchlists() {
                 type='text'
                 value={newLabel}
                 onChange={e => setNewLabel(e.target.value)}
-                placeholder='List name…'
+                placeholder='Watchlist name...'
                 className='wl-create-input'
               />
               <button type='submit' className='movy-btn movy-btn--primary'>Create</button>
@@ -139,8 +139,8 @@ export default function Watchlists() {
         ) : watchlists.length === 0 ? (
           <div className='wl-empty'>
             <Film size={40} strokeWidth={1.25} className='wl-empty__icon' />
-            <p className='wl-empty__heading'>No lists yet</p>
-            <p className='wl-empty__sub'>Create a list and add movies from any film page.</p>
+            <p className='wl-empty__heading'>No watchlists yet</p>
+            <p className='wl-empty__sub'>Create a watchlist and add movies from any film page.</p>
           </div>
         ) : (
           <ul className='wl-grid'>
