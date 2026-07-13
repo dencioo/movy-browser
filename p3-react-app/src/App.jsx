@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header';
 import AppRoutes from './routes/AppRoutes';
 import { addMovieToWatchlist, getUserWatchlist, removeMovieFromWatchlist, syncMovieToBackend } from './api/watchlistService.js';
+import Footer from './components/Footer.jsx';
 
 window.getUserWatchlist = getUserWatchlist;
 window.addMovieToWatchlist = addMovieToWatchlist;
@@ -27,6 +28,7 @@ function App() {
     <div className='app'>
       <Header token={token} setToken={updateToken}/>
       <AppRoutes setToken={updateToken}/>
+      <Footer />
     </div>
   )
 }
